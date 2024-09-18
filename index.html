@@ -4,65 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="text/javascript" src="script.js"></script>
 </head>
-<body>
-    <h1>Registration Form</h1>
+<body class="bg-gray-100 p-6">
 
-    <form id="registrationForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" required><br><br>
+    <h1 class="text-2xl font-bold mb-6 text-center">Registration Form</h1>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" required><br><br>
+    <!-- Registration Form -->
+    <form id="registrationForm" class="max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg mb-8">
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name:</label>
+            <input type="text" id="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" required><br><br>
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+            <input type="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        </div>
 
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" required><br><br>
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">Password:</label>
+            <input type="password" id="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        </div>
 
-        <label for="terms">
-            <input type="checkbox" id="terms" required> I accept the terms and conditions
-        </label><br><br>
+        <div class="mb-4">
+            <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth:</label>
+            <input type="date" id="dob" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        </div>
 
-        <button type="submit">Submit</button>
+        <div class="mb-4">
+            <label for="terms" class="inline-flex items-center">
+                <input type="checkbox" id="terms" class="form-checkbox text-indigo-600" required>
+                <span class="ml-2 text-sm font-medium text-gray-700">I accept the terms and conditions</span>
+            </label>
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Submit
+        </button>
     </form>
 
-    <h2>Registered Users</h2>
+    <h2 class="text-xl font-bold text-center mb-4">Registered Users</h2>
 
-    <table id="usersTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Dob</th>
-                <th>Accepted terms?</th>
-            </tr>
-        </thead>
-        <tbody>
-       
-        </tbody>
-    </table>
+    <!-- Table to display registered users -->
+    <div class="max-w-2xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+        <table id="usersTable" class="table-auto w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">Email</th>
+                    <th class="px-4 py-2">Password</th>
+                    <th class="px-4 py-2">Dob</th>
+                    <th class="px-4 py-2">Accepted terms?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Initially the table is empty -->
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
