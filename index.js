@@ -95,4 +95,4 @@
 
             // Re-render the table with the new data
             renderTable();
-        });
+        });S
