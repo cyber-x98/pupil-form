@@ -1,4 +1,4 @@
- // Function to set min and max date based on age requirements
+ // Function to set min and max date based on age 
         function setDobRange() {
             const dobInput = document.getElementById('dob');
             const today = new Date();
