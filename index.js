@@ -1,4 +1,23 @@
-// Function to render data from localStorage into the table
+ // Function to set min and max date based on age requirements
+        function setDobRange() {
+            const dobInput = document.getElementById('dob');
+            const today = new Date();
+
+            // Calculate date for 18 years ago
+            const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+            // Calculate date for 55 years ago
+            const minDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+
+            // Format dates to YYYY-MM-DD
+            const maxDateFormatted = maxDate.toISOString().split('T')[0];
+            const minDateFormatted = minDate.toISOString().split('T')[0];
+
+            // Set min and max attributes for the dob input
+            dobInput.setAttribute('min', minDateFormatted);
+            dobInput.setAttribute('max', maxDateFormatted);
+        }
+
+        // Function to render data from localStorage into the table
         function renderTable() {
             const tableBody = document.querySelector('#usersTable tbody');
             tableBody.innerHTML = ''; // Clear existing table data
@@ -20,7 +39,7 @@
             });
         }
 
-        // Function to validate the age
+        // Function to validate the age between 18 and 55
         function validateAge(dob) {
             const today = new Date();
             const birthDate = new Date(dob);
@@ -34,7 +53,10 @@
         }
 
         // Render the table when the page loads
-        document.addEventListener('DOMContentLoaded', renderTable);
+        document.addEventListener('DOMContentLoaded', () => {
+            setDobRange(); // Set the allowed date range for dob input
+            renderTable(); // Render the table
+        });
 
         // Handle form submission
         document.getElementById('registrationForm').addEventListener('submit', function(event) {
