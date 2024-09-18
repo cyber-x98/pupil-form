@@ -1,3 +1,4 @@
+// js content
 document.addEventListener('DOMContentLoaded', () => {
     setDobRange();
     renderTable();
@@ -5,15 +6,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const dob = document.getElementById('dob').value;
     const termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
+
     if (!validateAge(dob)) {
         alert('You must be between 18 and 55 years old to register.');
         return;
     }
+
+    if (!validateEmail(email)) {
+        alert('Please enter a valid email address.');
+        return;
+    }
+
     let entries = JSON.parse(localStorage.getItem('entries')) || [];
     entries.push({
         name: name,
@@ -23,6 +32,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         termsAccepted: termsAccepted
     });
     localStorage.setItem('entries', JSON.stringify(entries));
+
     document.getElementById('registrationForm').reset();
     renderTable();
 });
@@ -64,4 +74,9 @@ function validateAge(dob) {
         age--;
     }
     return age >= 18 && age <= 55;
+}
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
