@@ -1,4 +1,5 @@
-function renderTable() {
+// Function to render data from localStorage into the table
+        function renderTable() {
             const tableBody = document.querySelector('#usersTable tbody');
             tableBody.innerHTML = ''; // Clear existing table data
 
@@ -19,6 +20,19 @@ function renderTable() {
             });
         }
 
+        // Function to validate the age
+        function validateAge(dob) {
+            const today = new Date();
+            const birthDate = new Date(dob);
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age >= 18 && age <= 55;
+        }
+
         // Render the table when the page loads
         document.addEventListener('DOMContentLoaded', renderTable);
 
@@ -32,6 +46,12 @@ function renderTable() {
             const password = document.getElementById('password').value;
             const dob = document.getElementById('dob').value;
             const termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
+
+            // Validate age
+            if (!validateAge(dob)) {
+                alert('You must be between 18 and 55 years old to register.');
+                return;
+            }
 
             // Get existing entries from localStorage or initialize as an empty array
             let entries = JSON.parse(localStorage.getItem('entries')) || [];
