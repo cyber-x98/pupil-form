@@ -11,7 +11,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const dob = document.getElementById('dob').value;
-    const termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
+    const termsAccepted = document.getElementById('terms').checked ? 'True' : 'False';
 
     if (!validateAge(dob)) {
         alert('You must be between 18 and 55 years old to register.');
