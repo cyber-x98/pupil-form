@@ -50,8 +50,9 @@ function setDobRange() {
 
 function renderTable() {
     const tableBody = document.querySelector('#usersTable tbody');
-    tableBody.innerHTML = '';
+    tableBody.innerHTML = '';  // Clear previous entries
     const storedEntries = JSON.parse(localStorage.getItem('entries')) || [];
+
     storedEntries.forEach(entry => {
         const newRow = document.createElement('tr');
         newRow.innerHTML = `
@@ -64,6 +65,7 @@ function renderTable() {
         tableBody.appendChild(newRow);
     });
 }
+
 
 function validateAge(dob) {
     const today = new Date();
