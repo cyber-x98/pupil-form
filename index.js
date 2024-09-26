@@ -16,7 +16,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     var email = document.getElementById('email').value;
     var password = document.getElementById('password').value;
     var dob = document.getElementById('dob').value;
-    var termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
+    var termsAccepted = document.getElementById('terms').checked ? 'true' : 'false';
 
     // Validate age
     if (!validateAge(dob)) {
