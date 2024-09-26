@@ -1,17 +1,22 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Set date range for dob input
     setDobRange();
+    // Add table headers once page is loaded
+    addTableHeaders();
+    // Display any stored entries in the table
     renderTable();
 });
 
-// Handle form submission
+// When the form is submitted
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent page from refreshing when form is submitted
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const dob = document.getElementById('dob').value;
-    const termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
+    // Get all form values
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var dob = document.getElementById('dob').value;
+    var termsAccepted = document.getElementById('terms').checked ? 'Yes' : 'No';
 
     // Validate age
     if (!validateAge(dob)) {
@@ -25,10 +30,10 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         return;
     }
 
-    // Get existing entries or create empty array if none
-    let entries = JSON.parse(localStorage.getItem('entries')) || [];
+    // Get any existing entries or start a new array
+    var entries = JSON.parse(localStorage.getItem('entries')) || [];
 
-    // Add new entry to array
+    // Add the new entry
     entries.push({
         name: name,
         email: email,
@@ -37,62 +42,77 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         termsAccepted: termsAccepted
     });
 
-    // Update localStorage with new entry list
+    // Store updated entries back to localStorage
     localStorage.setItem('entries', JSON.stringify(entries));
 
-    // Clear form
+    // Reset the form after submission
     document.getElementById('registrationForm').reset();
 
-    // Immediately update table
+    // Re-render the table with the new entry included
     renderTable();
 });
 
-// Set the date of birth range (18-55 years old)
-function setDobRange() {
-    const dobInput = document.getElementById('dob');
-    const today = new Date();
-    const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-    const minDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
-    const maxDateFormatted = maxDate.toISOString().split('T')[0];
-    const minDateFormatted = minDate.toISOString().split('T')[0];
-    dobInput.setAttribute('min', minDateFormatted);
-    dobInput.setAttribute('max', maxDateFormatted);
+// This adds the headers to the table
+function addTableHeaders() {
+    var tableHead = document.querySelector('#usersTable thead');
+    var headerRow = document.createElement('tr');
+
+    // Table column names
+    var headers = ['Name', 'Email', 'Password', 'Dob', 'Accepted terms?'];
+    for (var i = 0; i < headers.length; i++) {
+        var th = document.createElement('th');
+        th.textContent = headers[i];
+        headerRow.appendChild(th);
+    }
+
+    tableHead.appendChild(headerRow);
 }
 
-// Render the table from localStorage data
+// This function shows all saved entries from localStorage in the table
 function renderTable() {
-    const tableBody = document.querySelector('#usersTable tbody');
-    tableBody.innerHTML = ''; // Clear previous content
-    const storedEntries = JSON.parse(localStorage.getItem('entries')) || []; // Get entries from localStorage
+    var tableBody = document.querySelector('#usersTable tbody');
+    tableBody.innerHTML = ''; // Clear the table body first
+    var storedEntries = JSON.parse(localStorage.getItem('entries')) || []; // Get entries or empty array if none
 
-    // Loop through stored entries and add them to the table
-    storedEntries.forEach(entry => {
-        const newRow = document.createElement('tr');
+    // Loop through each stored entry and add a row in the table
+    for (var i = 0; i < storedEntries.length; i++) {
+        var entry = storedEntries[i];
+        var newRow = document.createElement('tr');
         newRow.innerHTML = `
-            <td class="border px-4 py-2">${entry.name}</td>
-            <td class="border px-4 py-2">${entry.email}</td>
-            <td class="border px-4 py-2">${entry.password}</td>
-            <td class="border px-4 py-2">${entry.dob}</td>
-            <td class="border px-4 py-2">${entry.termsAccepted}</td>
+            <td>${entry.name}</td>
+            <td>${entry.email}</td>
+            <td>${entry.password}</td>
+            <td>${entry.dob}</td>
+            <td>${entry.termsAccepted}</td>
         `;
         tableBody.appendChild(newRow);
-    });
+    }
 }
 
-// Validate age (18-55 years old)
+// Set the range for the date of birth input (18-55 years old)
+function setDobRange() {
+    var dobInput = document.getElementById('dob');
+    var today = new Date();
+    var maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    var minDate = new Date(today.getFullYear() - 55, today.getMonth(), today.getDate());
+    dobInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+    dobInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+}
+
+// Check if the age is between 18 and 55 years old
 function validateAge(dob) {
-    const today = new Date();
-    const birthDate = new Date(dob);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
+    var today = new Date();
+    var birthDate = new Date(dob);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
     }
     return age >= 18 && age <= 55;
 }
 
-// Validate email format using regex
+// Check if the email is valid
 function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
